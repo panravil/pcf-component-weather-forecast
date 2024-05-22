@@ -1,11 +1,7 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { initializeIcons } from '@fluentui/react/lib/Icons';
-import { IWeatherData, WeatherType } from "./src/types/helper";
 import { WeatherForecastComponent } from './WeatherForecastComponent';
-
-initializeIcons(undefined, { disableWarnings: true });
 
 export class WeatherForecast implements ComponentFramework.StandardControl<IInputs, IOutputs> {
    
@@ -30,7 +26,7 @@ export class WeatherForecast implements ComponentFramework.StandardControl<IInpu
         // Add control initialization code
 
         const root = ReactDOM.createRoot(container);
-        root.render(React.createElement(WeatherForecastComponent, {items: this.generateWeatherData()}))
+        root.render(React.createElement(WeatherForecastComponent))
     }
 
 
@@ -62,31 +58,4 @@ export class WeatherForecast implements ComponentFramework.StandardControl<IInpu
     }
 
     
-    private generateWeatherData(): IWeatherData[] {
-
-        let startDate = new Date(); 
-        let weatherData: IWeatherData[] = []; 
-        for (let i = 0; i < 5; i++) { 
-            let date = new Date(); 
-            date.setDate(startDate.getDate() + i); 
-            let temperature = Math.floor(Math.random() * 51) - 25; 
-            let weatherType: WeatherType = WeatherType.SUNNY; 
-            if (temperature <= -5) 
-                weatherType = WeatherType.SNOW; 
-            else if (temperature >= -5 && temperature <= 5) 
-                weatherType = WeatherType.RAINSNOW; 
-            else if (temperature >= 5 && temperature <= 10) 
-                weatherType = WeatherType.CLOUDY; 
-            else if (temperature >= 10 && temperature <= 20) 
-                weatherType = WeatherType.PARTLYCLOUDYDAY; 
-            else if (temperature >= 20) 
-                weatherType = WeatherType.SUNNY; 
-            weatherData.push({ 
-                date: date, 
-                temperature: temperature, 
-                weatherType: weatherType 
-            }); 
-        } 
-        return weatherData;
-    }
 }
